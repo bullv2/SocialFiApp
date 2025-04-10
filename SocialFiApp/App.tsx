@@ -2,9 +2,9 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider } from './src/services/AuthContext';
 import AppNavigator from './src/navigation/AppNavigator';
-import { ThemeProvider } from '@rneui/themed';
-import { theme } from './src/theme/theme';
 import { StatusBar } from 'react-native';
+import { ThemeProvider } from './src/theme/ThemeContext';
+import { theme } from './src/theme/theme';
 
 export default function App() {
   return (

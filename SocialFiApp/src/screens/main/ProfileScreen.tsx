@@ -36,47 +36,141 @@ const ProfileScreen = () => {
     },
   ];
 
-  const socialChains = [
+  const socialChains: SocialChain[] = [
     {
       id: '1',
-      title: 'Web3 Development Journey',
+      title: 'My Journey to Parenthood',
+      description: 'A collection of precious moments from pregnancy to raising our little one',
+      startDate: new Date('2023-01-15'),
       posts: [
         {
-          id: '1-1',
-          content: 'Starting my journey into Web3 development. Learning Solidity and smart contract development.',
-          timestamp: '2024-03-01T10:00:00Z',
-          likes: 45,
-          comments: 12,
-          reposts: 8,
-          chainId: '1',
-          chainPosition: 1,
+          id: '1',
+          content: 'Just found out we\'re expecting! Our lives are about to change forever. Feeling a mix of excitement and nervousness. #NewBeginnings',
+          timestamp: new Date('2023-01-15'),
+          likes: 245,
+          comments: 89,
+          reposts: 12,
+          previousPostId: null,
+          nextPostId: '2'
         },
         {
-          id: '1-2',
-          content: 'Built my first smart contract! A simple token contract with basic functionality.',
-          timestamp: '2024-03-05T15:30:00Z',
-          likes: 78,
-          comments: 23,
-          reposts: 15,
-          chainId: '1',
-          chainPosition: 2,
+          id: '2',
+          content: 'First ultrasound today! Seeing that tiny heartbeat was the most magical moment of our lives. Our little miracle is growing strong. #FirstTrimester',
+          timestamp: new Date('2023-02-20'),
+          likes: 312,
+          comments: 124,
+          reposts: 45,
+          previousPostId: '1',
+          nextPostId: '3'
         },
         {
-          id: '1-3',
-          content: 'Working on a decentralized social media platform. Excited about the possibilities!',
-          timestamp: '2024-03-10T09:15:00Z',
-          likes: 102,
-          comments: 45,
-          reposts: 28,
-          chainId: '1',
-          chainPosition: 3,
+          id: '3',
+          content: 'Baby shower today! Overwhelmed by the love and support from family and friends. The nursery is coming together beautifully. #BabyShower',
+          timestamp: new Date('2023-06-10'),
+          likes: 456,
+          comments: 178,
+          reposts: 67,
+          previousPostId: '2',
+          nextPostId: '4'
         },
-      ],
-      createdAt: '2024-03-01T10:00:00Z',
-      updatedAt: '2024-03-10T09:15:00Z',
-      totalPosts: 3,
-      totalEngagement: 354,
+        {
+          id: '4',
+          content: 'Welcome to the world, our precious little one! Born at 3:24 AM, 7.2 lbs of pure joy. We\'re officially parents! #Newborn',
+          timestamp: new Date('2023-09-05'),
+          likes: 789,
+          comments: 256,
+          reposts: 123,
+          previousPostId: '3',
+          nextPostId: '5'
+        },
+        {
+          id: '5',
+          content: 'First family vacation with our 6-month-old! Watching them experience the ocean for the first time was priceless. #FamilyMemories',
+          timestamp: new Date('2024-03-15'),
+          likes: 567,
+          comments: 198,
+          reposts: 89,
+          previousPostId: '4',
+          nextPostId: null
+        }
+      ]
     },
+    {
+      id: '2',
+      title: 'Career Milestones',
+      description: 'From first job to leadership roles, documenting my professional growth',
+      startDate: new Date('2018-06-01'),
+      posts: [
+        {
+          id: '6',
+          content: 'First day at my dream company! Nervous but excited for this new chapter. Ready to learn and grow. #CareerStart',
+          timestamp: new Date('2018-06-01'),
+          likes: 234,
+          comments: 78,
+          reposts: 23,
+          previousPostId: null,
+          nextPostId: '7'
+        },
+        {
+          id: '7',
+          content: 'Promoted to team lead today! Grateful for the opportunity to mentor others and make a bigger impact. #CareerGrowth',
+          timestamp: new Date('2020-03-15'),
+          likes: 345,
+          comments: 123,
+          reposts: 45,
+          previousPostId: '6',
+          nextPostId: '8'
+        },
+        {
+          id: '8',
+          content: 'Just completed my first major project as a manager. The team did an amazing job, and I couldn\'t be prouder. #Leadership',
+          timestamp: new Date('2022-01-20'),
+          likes: 456,
+          comments: 167,
+          reposts: 78,
+          previousPostId: '7',
+          nextPostId: null
+        }
+      ]
+    },
+    {
+      id: '3',
+      title: 'Travel Adventures',
+      description: 'Exploring the world one destination at a time',
+      startDate: new Date('2019-04-10'),
+      posts: [
+        {
+          id: '9',
+          content: 'First solo trip to Japan! The cherry blossoms are in full bloom, and the culture is even more beautiful than I imagined. #SoloTravel',
+          timestamp: new Date('2019-04-10'),
+          likes: 678,
+          comments: 234,
+          reposts: 156,
+          previousPostId: null,
+          nextPostId: '10'
+        },
+        {
+          id: '10',
+          content: 'Hiking the Inca Trail to Machu Picchu. The views are breathtaking, and the history is humbling. #BucketList',
+          timestamp: new Date('2021-08-05'),
+          likes: 789,
+          comments: 267,
+          reposts: 189,
+          previousPostId: '9',
+          nextPostId: '11'
+        },
+        {
+          id: '11',
+          content: 'Safari in Kenya! Witnessing the Great Migration was a once-in-a-lifetime experience. Nature is truly amazing. #Wildlife',
+          timestamp: new Date('2023-07-20'),
+          likes: 890,
+          comments: 345,
+          reposts: 234,
+          previousPostId: '10',
+          nextPostId: null
+        }
+      ]
+    }
   ];
 
   const handlePostPress = (post: SocialChainPost) => {
@@ -89,24 +183,23 @@ const ProfileScreen = () => {
       <ScrollView>
         <View style={styles.header}>
           <Image
-            source={{ uri: 'https://i.pravatar.cc/150?u=user123' }}
+            source={{ uri: 'https://randomuser.me/api/portraits/women/44.jpg' }}
             style={styles.profileImage}
           />
-          <Text style={styles.username}>@web3enthusiast</Text>
-          <Text style={styles.bio}>Blockchain developer | Web3 enthusiast | Building the future of social media</Text>
-          
+          <Text style={styles.name}>Sarah Johnson</Text>
+          <Text style={styles.bio}>Documenting life's precious moments and creating memories that last a lifetime</Text>
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{userStats.posts}</Text>
-              <Text style={styles.statLabel}>Posts</Text>
+              <Text style={styles.statValue}>1.2K</Text>
+              <Text style={styles.statLabel}>Moments</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{userStats.followers}</Text>
-              <Text style={styles.statLabel}>Followers</Text>
+              <Text style={styles.statValue}>5.8K</Text>
+              <Text style={styles.statLabel}>Connections</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{userStats.following}</Text>
-              <Text style={styles.statLabel}>Following</Text>
+              <Text style={styles.statValue}>12.3K</Text>
+              <Text style={styles.statLabel}>Engagements</Text>
             </View>
           </View>
 
@@ -202,7 +295,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.round,
     marginBottom: theme.spacing.md,
   } as ImageStyle,
-  username: {
+  name: {
     ...theme.typography.h2,
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.xs,
@@ -226,7 +319,7 @@ const styles = StyleSheet.create({
   statItem: {
     alignItems: 'center',
   } as ViewStyle,
-  statNumber: {
+  statValue: {
     ...theme.typography.h3,
     color: theme.colors.text.primary,
   } as TextStyle,
