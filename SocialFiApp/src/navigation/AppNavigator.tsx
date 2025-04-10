@@ -9,6 +9,9 @@ import HomeScreen from '../screens/main/HomeScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import WalletScreen from '../screens/main/WalletScreen';
 import NotificationsScreen from '../screens/main/NotificationsScreen';
+import { theme } from '../theme/theme';
+import { Icon } from '@rneui/themed';
+import { TextStyle } from 'react-native';
 
 // Create navigators
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -19,14 +22,65 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const RegisterScreen = () => null;
 const ForgotPasswordScreen = () => null;
 
+const headerTitleStyle = {
+  fontSize: theme.typography.h3.fontSize,
+  fontWeight: '700' as const,
+};
+
 // Main Tab Navigator
 const MainTabs = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Wallet" component={WalletScreen} />
-      <Tab.Screen name="Notifications" component={NotificationsScreen} />
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.text.secondary,
+        tabBarStyle: {
+          backgroundColor: theme.colors.surface,
+          borderTopColor: theme.colors.border,
+        },
+        headerStyle: {
+          backgroundColor: theme.colors.surface,
+        },
+        headerTintColor: theme.colors.text.primary,
+        headerTitleStyle,
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" type="material" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="person" type="material" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Wallet"
+        component={WalletScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="account-balance-wallet" type="material" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="notifications" type="material" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -34,7 +88,15 @@ const MainTabs = () => {
 // Auth Stack Navigator
 const AuthNavigator = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.surface,
+        },
+        headerTintColor: theme.colors.text.primary,
+        headerTitleStyle,
+      }}
+    >
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Register" component={RegisterScreen} />
       <AuthStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />

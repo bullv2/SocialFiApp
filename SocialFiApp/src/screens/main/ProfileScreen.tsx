@@ -5,6 +5,8 @@ import { theme } from '../../theme/theme';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
 import { Ionicons } from '@expo/vector-icons';
+import { SocialChainList } from '../../components/SocialChain';
+import { SocialChainPost } from '../../types/social';
 
 const ProfileScreen = () => {
   const userStats = {
@@ -33,6 +35,54 @@ const ProfileScreen = () => {
       timeAgo: '1d ago',
     },
   ];
+
+  const socialChains = [
+    {
+      id: '1',
+      title: 'Web3 Development Journey',
+      posts: [
+        {
+          id: '1-1',
+          content: 'Starting my journey into Web3 development. Learning Solidity and smart contract development.',
+          timestamp: '2024-03-01T10:00:00Z',
+          likes: 45,
+          comments: 12,
+          reposts: 8,
+          chainId: '1',
+          chainPosition: 1,
+        },
+        {
+          id: '1-2',
+          content: 'Built my first smart contract! A simple token contract with basic functionality.',
+          timestamp: '2024-03-05T15:30:00Z',
+          likes: 78,
+          comments: 23,
+          reposts: 15,
+          chainId: '1',
+          chainPosition: 2,
+        },
+        {
+          id: '1-3',
+          content: 'Working on a decentralized social media platform. Excited about the possibilities!',
+          timestamp: '2024-03-10T09:15:00Z',
+          likes: 102,
+          comments: 45,
+          reposts: 28,
+          chainId: '1',
+          chainPosition: 3,
+        },
+      ],
+      createdAt: '2024-03-01T10:00:00Z',
+      updatedAt: '2024-03-10T09:15:00Z',
+      totalPosts: 3,
+      totalEngagement: 354,
+    },
+  ];
+
+  const handlePostPress = (post: SocialChainPost) => {
+    // Navigate to post detail view
+    console.log('Post pressed:', post);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -116,6 +166,21 @@ const ProfileScreen = () => {
             ))}
           </View>
         </Card>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Social Chains</Text>
+          <TouchableOpacity>
+            <Ionicons name="add-circle-outline" size={24} color={theme.colors.primary} />
+          </TouchableOpacity>
+        </View>
+
+        {socialChains.map((chain) => (
+          <SocialChainList
+            key={chain.id}
+            chain={chain}
+            onPostPress={handlePostPress}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -184,7 +249,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: theme.spacing.md,
+    margin: theme.spacing.md,
+    marginBottom: theme.spacing.sm,
   } as ViewStyle,
   sectionTitle: {
     ...theme.typography.h3,
