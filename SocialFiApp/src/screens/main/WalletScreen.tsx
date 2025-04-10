@@ -70,13 +70,6 @@ const WalletScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Wallet</Text>
-          <TouchableOpacity>
-            <Ionicons name="settings-outline" size={24} color={theme.colors.text.primary} />
-          </TouchableOpacity>
-        </View>
-
         <Card variant="filled" style={styles.balanceCard}>
           <Text style={styles.totalLabel}>Total Balance</Text>
           <Text style={styles.totalAmount}>$3,718.00</Text>
@@ -173,52 +166,64 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-  } as ViewStyle,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
-    ...theme.shadows.sm,
-  } as ViewStyle,
+    paddingHorizontal: theme.spacing.lg,
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.md,
+  },
   headerTitle: {
-    ...theme.typography.h2,
+    fontSize: theme.typography.h2.fontSize,
+    fontWeight: '700',
     color: theme.colors.text.primary,
-  } as TextStyle,
+  },
   balanceCard: {
-    margin: theme.spacing.md,
-    padding: theme.spacing.lg,
-    alignItems: 'center',
-  } as ViewStyle,
+    marginHorizontal: theme.spacing.lg,
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
+    padding: theme.spacing.xl,
+    borderRadius: theme.borderRadius.lg,
+    backgroundColor: theme.colors.surface,
+    ...theme.shadow.medium,
+  },
   totalLabel: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.body2.fontSize,
     color: theme.colors.text.secondary,
-  } as TextStyle,
+    marginBottom: theme.spacing.xs,
+  },
   totalAmount: {
-    ...theme.typography.h1,
+    fontSize: 36,
+    fontWeight: '700',
     color: theme.colors.text.primary,
-    marginVertical: theme.spacing.xs,
-  } as TextStyle,
+    marginBottom: theme.spacing.xs,
+  },
   changeText: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.body2.fontSize,
     color: theme.colors.success,
     marginBottom: theme.spacing.lg,
-  } as TextStyle,
+  },
   actionButtons: {
     flexDirection: 'row',
-    gap: theme.spacing.md,
+    justifyContent: 'space-between',
     width: '100%',
-  } as ViewStyle,
+    gap: theme.spacing.md,
+  },
   tokensCard: {
-    margin: theme.spacing.md,
-    padding: theme.spacing.md,
-  } as ViewStyle,
+    marginHorizontal: theme.spacing.lg,
+    marginBottom: theme.spacing.lg,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    backgroundColor: theme.colors.surface,
+  },
   sectionTitle: {
-    ...theme.typography.h3,
+    fontSize: theme.typography.h3.fontSize,
+    fontWeight: '600',
     color: theme.colors.text.primary,
-    marginBottom: theme.spacing.md,
-  } as TextStyle,
+    marginBottom: theme.spacing.lg,
+  },
   tokenItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -226,68 +231,69 @@ const styles = StyleSheet.create({
     paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
-  } as ViewStyle,
+  },
   tokenInfo: {
     flex: 1,
-  } as ViewStyle,
+  },
   tokenHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: theme.spacing.xs,
-  } as ViewStyle,
+  },
   tokenSymbol: {
-    ...theme.typography.body,
+    fontSize: theme.typography.body1.fontSize,
     fontWeight: '600',
     color: theme.colors.text.primary,
     marginRight: theme.spacing.xs,
-  } as TextStyle,
+  },
   tokenName: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.body2.fontSize,
     color: theme.colors.text.secondary,
-  } as TextStyle,
+  },
   tokenValue: {
-    ...theme.typography.body,
-    color: theme.colors.text.primary,
-  } as TextStyle,
-  tokenBalance: {
-    alignItems: 'flex-end',
-  } as ViewStyle,
-  balanceAmount: {
-    ...theme.typography.body,
+    fontSize: theme.typography.body1.fontSize,
     fontWeight: '600',
     color: theme.colors.text.primary,
-  } as TextStyle,
+  },
+  tokenBalance: {
+    alignItems: 'flex-end',
+  },
+  balanceAmount: {
+    fontSize: theme.typography.body1.fontSize,
+    fontWeight: '600',
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.xs,
+  },
   changeAmount: {
-    ...theme.typography.small,
-    marginTop: theme.spacing.xs,
-  } as TextStyle,
+    fontSize: theme.typography.caption.fontSize,
+  },
   positiveChange: {
     color: theme.colors.success,
-  } as TextStyle,
+  },
   negativeChange: {
     color: theme.colors.error,
-  } as TextStyle,
+  },
   transactionsCard: {
     margin: theme.spacing.md,
     padding: theme.spacing.md,
-  } as ViewStyle,
+  },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: theme.spacing.md,
-  } as ViewStyle,
+  },
   viewAllText: {
     ...theme.typography.caption,
     color: theme.colors.primary,
-  } as TextStyle,
+  },
   transactionItem: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
-  } as ViewStyle,
+  },
   transactionIcon: {
     width: 40,
     height: 40,
@@ -296,42 +302,58 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: theme.spacing.md,
-  } as ViewStyle,
+  },
   transactionInfo: {
     flex: 1,
-  } as ViewStyle,
+  },
   transactionType: {
-    ...theme.typography.body,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.xs,
-  } as TextStyle,
-  transactionDetails: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.body1.fontSize,
     color: theme.colors.text.secondary,
-  } as TextStyle,
+  },
+  transactionDetails: {
+    fontSize: theme.typography.caption.fontSize,
+    color: theme.colors.text.secondary,
+  },
   transactionAmount: {
     alignItems: 'flex-end',
-  } as ViewStyle,
+  },
   amountText: {
-    ...theme.typography.body,
-    fontWeight: '600',
+    fontSize: theme.typography.body1.fontSize,
     color: theme.colors.text.primary,
-  } as TextStyle,
+    marginBottom: theme.spacing.xs,
+  },
   transactionStatus: {
-    alignItems: 'flex-end',
-    marginTop: theme.spacing.xs,
-  } as ViewStyle,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+  },
   statusText: {
-    ...theme.typography.small,
-    color: theme.colors.success,
-  } as TextStyle,
+    fontSize: theme.typography.caption.fontSize,
+    color: theme.colors.text.light,
+  },
   pendingStatus: {
     color: theme.colors.warning,
-  } as TextStyle,
+  },
   timeAgo: {
-    ...theme.typography.small,
+    fontSize: theme.typography.caption.fontSize,
     color: theme.colors.text.light,
-  } as TextStyle,
+  },
+  balanceText: {
+    ...theme.typography.body1,
+    color: theme.colors.text.primary,
+  },
+  tokenPrice: {
+    ...theme.typography.caption,
+    color: theme.colors.text.light,
+  },
+  transactionDate: {
+    ...theme.typography.caption,
+    color: theme.colors.text.light,
+  },
+  dateText: {
+    ...theme.typography.caption,
+    color: theme.colors.text.light,
+  },
 });
 
 export default WalletScreen; 

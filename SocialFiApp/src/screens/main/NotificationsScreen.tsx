@@ -58,23 +58,13 @@ const NotificationsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Notifications</Text>
-        <Button
-          title="Mark all as read"
-          onPress={handleMarkAllAsRead}
-          variant="outline"
-          size="small"
-        />
-      </View>
-
-      <ScrollView>
+    <SafeAreaView style={styles.container} edges={['bottom']}>
+      <ScrollView style={styles.scrollView}>
         {notifications.map((notification) => (
           <TouchableOpacity
             key={notification.id}
+            style={styles.notificationItem}
             onPress={() => handleNotificationPress(notification.id)}
-            activeOpacity={0.8}
           >
             <Card
               variant="filled"
@@ -119,20 +109,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-  } as ViewStyle,
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
-    ...theme.shadows.sm,
-  } as ViewStyle,
-  headerTitle: {
-    ...theme.typography.h2,
-    color: theme.colors.text.primary,
-  } as TextStyle,
+  },
+  scrollView: {
+    flex: 1,
+  },
   notificationCard: {
+    marginTop: theme.spacing.md,
     margin: theme.spacing.md,
     padding: theme.spacing.md,
   } as ViewStyle,
@@ -153,9 +135,8 @@ const styles = StyleSheet.create({
     flex: 1,
   } as ViewStyle,
   notificationText: {
-    ...theme.typography.body,
+    ...theme.typography.body1,
     color: theme.colors.text.primary,
-    marginBottom: theme.spacing.xs,
   } as TextStyle,
   name: {
     fontWeight: '600',
@@ -176,7 +157,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text.primary,
   } as TextStyle,
   timeAgo: {
-    ...theme.typography.small,
+    ...theme.typography.caption,
     color: theme.colors.text.light,
   } as TextStyle,
   unreadIndicator: {
@@ -185,6 +166,9 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.round,
     backgroundColor: theme.colors.primary,
     marginLeft: theme.spacing.sm,
+  } as ViewStyle,
+  notificationItem: {
+    // Add appropriate styles for the notification item
   } as ViewStyle,
 });
 

@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.md,
     justifyContent: 'center',
     alignItems: 'center',
-    ...theme.shadows.sm,
+    ...theme.shadow.small,
   },
   primaryButton: {
     backgroundColor: theme.colors.primary,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.xl,
   },
   text: {
-    ...theme.typography.body,
+    ...theme.typography.body1,
     fontWeight: '600',
   },
   primaryText: {

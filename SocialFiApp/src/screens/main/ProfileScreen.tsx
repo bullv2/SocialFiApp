@@ -6,7 +6,7 @@ import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
 import { Ionicons } from '@expo/vector-icons';
 import { SocialChainList } from '../../components/SocialChain';
-import { SocialChainPost } from '../../types/social';
+import { SocialChainPost, SocialChain } from '../../types/social';
 
 const ProfileScreen = () => {
   const userStats = {
@@ -179,9 +179,9 @@ const ProfileScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.header}>
+    <SafeAreaView style={styles.container} edges={['bottom']}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.profileInfo}>
           <Image
             source={{ uri: 'https://randomuser.me/api/portraits/women/44.jpg' }}
             style={styles.profileImage}
@@ -203,7 +203,7 @@ const ProfileScreen = () => {
             </View>
           </View>
 
-          <View style={styles.actionButtons}>
+          <View style={styles.buttonContainer}>
             <Button
               title="Edit Profile"
               onPress={() => console.log('Edit Profile')}
@@ -283,79 +283,107 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-  } as ViewStyle,
-  header: {
+  },
+  scrollView: {
+    flex: 1,
+  },
+  profileInfo: {
     alignItems: 'center',
-    padding: theme.spacing.xl,
-    backgroundColor: theme.colors.surface,
-  } as ViewStyle,
+    paddingTop: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+  },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: theme.borderRadius.round,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     marginBottom: theme.spacing.md,
-  } as ImageStyle,
+    borderWidth: 3,
+    borderColor: theme.colors.primary,
+  },
   name: {
-    ...theme.typography.h2,
+    fontSize: theme.typography.h2.fontSize,
+    fontWeight: '700',
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.xs,
-  } as TextStyle,
+  },
   bio: {
-    ...theme.typography.body,
-    textAlign: 'center',
+    fontSize: theme.typography.body1.fontSize,
     color: theme.colors.text.secondary,
+    textAlign: 'center',
     marginBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.xl,
-  } as TextStyle,
+  },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
     paddingVertical: theme.spacing.lg,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: theme.colors.border,
-  } as ViewStyle,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.lg,
+    marginBottom: theme.spacing.lg,
+    ...theme.shadow.small,
+  },
   statItem: {
     alignItems: 'center',
-  } as ViewStyle,
+    flex: 1,
+  },
   statValue: {
-    ...theme.typography.h3,
+    fontSize: theme.typography.h3.fontSize,
+    fontWeight: '600',
     color: theme.colors.text.primary,
-  } as TextStyle,
+    marginBottom: theme.spacing.xs,
+  },
   statLabel: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.body2.fontSize,
     color: theme.colors.text.secondary,
-  } as TextStyle,
-  actionButtons: {
+  },
+  buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: theme.spacing.md,
-    marginTop: theme.spacing.lg,
-    width: '100%',
-  } as ViewStyle,
+    paddingHorizontal: theme.spacing.lg,
+    marginBottom: theme.spacing.xl,
+  },
+  editButton: {
+    flex: 1,
+    marginRight: theme.spacing.sm,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+  },
+  shareButton: {
+    flex: 1,
+    marginLeft: theme.spacing.sm,
+  },
+  editButtonText: {
+    color: theme.colors.primary,
+  },
+  shareButtonText: {
+    color: theme.colors.text.onPrimary,
+  },
+  sectionTitle: {
+    fontSize: theme.typography.h3.fontSize,
+    fontWeight: '600',
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+  },
   activitySection: {
     margin: theme.spacing.md,
     padding: theme.spacing.md,
-  } as ViewStyle,
+  },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: theme.spacing.md,
     marginBottom: theme.spacing.sm,
-  } as ViewStyle,
-  sectionTitle: {
-    ...theme.typography.h3,
-    color: theme.colors.text.primary,
-  } as TextStyle,
+  },
   activityItem: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: theme.spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
-  } as ViewStyle,
+  },
   activityIcon: {
     width: 40,
     height: 40,
@@ -364,38 +392,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: theme.spacing.md,
-  } as ViewStyle,
+  },
   activityContent: {
     flex: 1,
-  } as ViewStyle,
+  },
   activityText: {
-    ...theme.typography.body,
+    fontSize: theme.typography.body1.fontSize,
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.xs,
-  } as TextStyle,
+  },
   activityTime: {
-    ...theme.typography.small,
-    color: theme.colors.text.light,
-  } as TextStyle,
+    fontSize: theme.typography.caption.fontSize,
+    color: theme.colors.text.secondary,
+  },
   skillsSection: {
     margin: theme.spacing.md,
     padding: theme.spacing.md,
-  } as ViewStyle,
+  },
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: theme.spacing.sm,
-  } as ViewStyle,
+  },
   skillTag: {
     backgroundColor: theme.colors.background,
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.xs,
     borderRadius: theme.borderRadius.round,
-  } as ViewStyle,
+  },
   skillText: {
-    ...theme.typography.caption,
-    color: theme.colors.primary,
-  } as TextStyle,
+    fontSize: theme.typography.body1.fontSize,
+    color: theme.colors.text.primary,
+  },
+  skillLevel: {
+    fontSize: theme.typography.caption.fontSize,
+    color: theme.colors.text.light,
+  },
 });
 
 export default ProfileScreen; 

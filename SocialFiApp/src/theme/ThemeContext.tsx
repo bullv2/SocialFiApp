@@ -1,20 +1,22 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { theme } from './theme';
 
+export type Theme = typeof theme;
+
 interface ThemeContextType {
-  theme: typeof theme;
+  theme: Theme;
 }
 
 const ThemeContext = createContext<ThemeContextType>({ theme });
 
 interface ThemeProviderProps {
   children: ReactNode;
-  theme: typeof theme;
+  theme?: Theme;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme: customTheme }) => {
   return (
-    <ThemeContext.Provider value={{ theme }}>
+    <ThemeContext.Provider value={{ theme: customTheme || theme }}>
       {children}
     </ThemeContext.Provider>
   );

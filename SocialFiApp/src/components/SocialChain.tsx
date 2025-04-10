@@ -25,7 +25,7 @@ export const SocialChainList: React.FC<SocialChainListProps> = ({ chain, onPostP
   }, 0);
 
   return (
-    <Card style={styles.container}>
+    <Card variant="elevated" style={styles.container}>
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Text style={[styles.title, { color: theme.colors.text.primary }]}>{chain.title}</Text>

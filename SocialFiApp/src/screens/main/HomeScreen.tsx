@@ -58,84 +58,79 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>SocialFi Feed</Text>
-        <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={24} color={theme.colors.text.primary} />
-        </TouchableOpacity>
-      </View>
+    <SafeAreaView style={styles.container} edges={['bottom']}>
+      <ScrollView style={styles.scrollView}>
+        <Card variant="filled" style={styles.createPostCard}>
+          <View style={styles.createPostHeader}>
+            <Image
+              source={{ uri: 'https://i.pravatar.cc/150?u=currentuser' }}
+              style={styles.avatar}
+            />
+            <TextInput
+              style={styles.postInput}
+              placeholder="What's on your mind?"
+              value={newPost}
+              onChangeText={setNewPost}
+              multiline
+            />
+          </View>
+          <View style={styles.createPostActions}>
+            <Button
+              title="Post"
+              onPress={() => console.log('Post')}
+              variant="primary"
+              size="small"
+              disabled={!newPost.trim()}
+            />
+          </View>
+        </Card>
 
-      <Card variant="filled" style={styles.createPostCard}>
-        <View style={styles.createPostHeader}>
-          <Image
-            source={{ uri: 'https://i.pravatar.cc/150?u=currentuser' }}
-            style={styles.avatar}
-          />
-          <TextInput
-            style={styles.postInput}
-            placeholder="What's on your mind?"
-            value={newPost}
-            onChangeText={setNewPost}
-            multiline
-          />
-        </View>
-        <View style={styles.createPostActions}>
-          <Button
-            title="Post"
-            onPress={() => console.log('Post')}
-            variant="primary"
-            size="small"
-            disabled={!newPost.trim()}
-          />
-        </View>
-      </Card>
-
-      <ScrollView style={styles.feed}>
-        {demoPosts.map((post) => (
-          <Card key={post.id} style={styles.postCard}>
-            <View style={styles.postHeader}>
-              <Image
-                source={{ uri: `https://i.pravatar.cc/150?u=${post.username}` }}
-                style={styles.avatar}
-              />
-              <View style={styles.postInfo}>
-                <Text style={styles.name}>{post.name}</Text>
-                <Text style={styles.username}>@{post.username}</Text>
-              </View>
-              <Text style={styles.timeAgo}>{post.timeAgo}</Text>
-            </View>
-            <Text style={styles.postContent}>{post.content}</Text>
-            <View style={styles.postActions}>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => handleLike(post.id)}
-              >
-                <Ionicons
-                  name={post.liked ? 'heart' : 'heart-outline'}
-                  size={20}
-                  color={post.liked ? theme.colors.error : theme.colors.text.secondary}
+        <ScrollView style={styles.feed}>
+          {demoPosts.map((post) => (
+            <Card key={post.id} style={styles.postCard}>
+              <View style={styles.postHeader}>
+                <Image
+                  source={{ uri: `https://i.pravatar.cc/150?u=${post.username}` }}
+                  style={styles.avatar}
                 />
-                <Text style={[styles.actionText, post.liked && styles.likedText]}>
-                  {post.likes}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => handleComment(post.id)}
-              >
-                <Ionicons name="chatbubble-outline" size={20} color={theme.colors.text.secondary} />
-                <Text style={styles.actionText}>{post.comments}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => handleShare(post.id)}
-              >
-                <Ionicons name="share-outline" size={20} color={theme.colors.text.secondary} />
-              </TouchableOpacity>
-            </View>
-          </Card>
-        ))}
+                <View style={styles.postInfo}>
+                  <Text style={styles.name}>{post.name}</Text>
+                  <Text style={styles.username}>@{post.username}</Text>
+                </View>
+                <Text style={styles.timeAgo}>{post.timeAgo}</Text>
+              </View>
+              <Text style={styles.postContent}>{post.content}</Text>
+              <View style={styles.postActions}>
+                <TouchableOpacity
+                  style={styles.actionButton}
+                  onPress={() => handleLike(post.id)}
+                >
+                  <Ionicons
+                    name={post.liked ? 'heart' : 'heart-outline'}
+                    size={20}
+                    color={post.liked ? theme.colors.error : theme.colors.text.secondary}
+                  />
+                  <Text style={[styles.actionText, post.liked && styles.likedText]}>
+                    {post.likes}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.actionButton}
+                  onPress={() => handleComment(post.id)}
+                >
+                  <Ionicons name="chatbubble-outline" size={20} color={theme.colors.text.secondary} />
+                  <Text style={styles.actionText}>{post.comments}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.actionButton}
+                  onPress={() => handleShare(post.id)}
+                >
+                  <Ionicons name="share-outline" size={20} color={theme.colors.text.secondary} />
+                </TouchableOpacity>
+              </View>
+            </Card>
+          ))}
+        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -145,98 +140,101 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-  } as ViewStyle,
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: theme.spacing.md,
-    backgroundColor: theme.colors.surface,
-    ...theme.shadows.sm,
-  } as ViewStyle,
-  headerTitle: {
-    ...theme.typography.h2,
-    color: theme.colors.text.primary,
-  } as TextStyle,
+  },
+  scrollView: {
+    flex: 1,
+  },
   createPostCard: {
-    margin: theme.spacing.md,
-    padding: theme.spacing.md,
-  } as ViewStyle,
+    marginTop: theme.spacing.md,
+    marginHorizontal: theme.spacing.lg,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    backgroundColor: theme.colors.surface,
+    ...theme.shadow.small,
+  },
   createPostHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: theme.spacing.md,
-  } as ViewStyle,
+  },
   postInput: {
     flex: 1,
     marginLeft: theme.spacing.md,
-    ...theme.typography.body,
+    fontSize: theme.typography.body1.fontSize,
     color: theme.colors.text.primary,
-  } as TextStyle,
+    minHeight: 40,
+    padding: theme.spacing.sm,
+  },
   createPostActions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-  } as ViewStyle,
+    marginTop: theme.spacing.sm,
+  },
   feed: {
     flex: 1,
-  } as ViewStyle,
+  },
   postCard: {
-    margin: theme.spacing.md,
-    padding: theme.spacing.md,
-  } as ViewStyle,
+    marginHorizontal: theme.spacing.lg,
+    marginVertical: theme.spacing.sm,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    backgroundColor: theme.colors.surface,
+    ...theme.shadow.small,
+  },
   postHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: theme.spacing.md,
-  } as ViewStyle,
+  },
   avatar: {
     width: 40,
     height: 40,
-    borderRadius: theme.borderRadius.round,
-  } as ImageStyle,
+    borderRadius: 20,
+    backgroundColor: theme.colors.background,
+  },
   postInfo: {
     flex: 1,
     marginLeft: theme.spacing.md,
-  } as ViewStyle,
+  },
   name: {
-    ...theme.typography.body,
-    fontWeight: '600' as const,
+    fontSize: theme.typography.body1.fontSize,
+    fontWeight: '600',
     color: theme.colors.text.primary,
-  } as TextStyle,
+    marginBottom: 2,
+  },
   username: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.caption.fontSize,
     color: theme.colors.text.secondary,
-  } as TextStyle,
+  },
   timeAgo: {
-    ...theme.typography.small,
-    color: theme.colors.text.light,
-  } as TextStyle,
+    fontSize: theme.typography.caption.fontSize,
+    color: theme.colors.text.secondary,
+    marginLeft: theme.spacing.sm,
+  },
   postContent: {
-    ...theme.typography.body,
+    fontSize: theme.typography.body1.fontSize,
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.md,
-    lineHeight: 24,
-  } as TextStyle,
+    lineHeight: 20,
+  },
   postActions: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: theme.spacing.sm,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
-  } as ViewStyle,
+    alignItems: 'center',
+    marginTop: theme.spacing.sm,
+    gap: theme.spacing.lg,
+  },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: theme.spacing.xs,
-  } as ViewStyle,
+    gap: theme.spacing.xs,
+  },
   actionText: {
-    ...theme.typography.caption,
+    fontSize: theme.typography.caption.fontSize,
     color: theme.colors.text.secondary,
-    marginLeft: theme.spacing.xs,
-  } as TextStyle,
+  },
   likedText: {
     color: theme.colors.error,
-  } as TextStyle,
+  },
 });
 
 export default HomeScreen; 

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList, MainTabParamList, AuthStackParamList } from '../types/navigation';
 import { useAuth } from '../services/AuthContext';
-import LoginScreen from '../screens/auth/LoginScreen';
+import { LoginScreen } from '../screens/auth/LoginScreen';
 import HomeScreen from '../screens/main/HomeScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import WalletScreen from '../screens/main/WalletScreen';
@@ -37,18 +37,27 @@ const MainTabs = () => {
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
+          paddingBottom: theme.spacing.sm,
+          paddingTop: theme.spacing.xs,
+          height: theme.spacing.xxl + theme.spacing.lg,
         },
         headerStyle: {
-          backgroundColor: theme.colors.surface,
+          backgroundColor: theme.colors.background,
         },
         headerTintColor: theme.colors.text.primary,
         headerTitleStyle,
+        headerShadowVisible: false,
+        tabBarLabelStyle: {
+          marginBottom: theme.spacing.xs,
+          fontSize: theme.typography.caption.fontSize,
+        },
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
+          title: 'Feed',
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" type="material" color={color} size={size} />
           ),
@@ -58,6 +67,7 @@ const MainTabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          title: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <Icon name="person" type="material" color={color} size={size} />
           ),
@@ -67,6 +77,7 @@ const MainTabs = () => {
         name="Wallet"
         component={WalletScreen}
         options={{
+          title: 'Wallet',
           tabBarIcon: ({ color, size }) => (
             <Icon name="account-balance-wallet" type="material" color={color} size={size} />
           ),
@@ -76,6 +87,7 @@ const MainTabs = () => {
         name="Notifications"
         component={NotificationsScreen}
         options={{
+          title: 'Notifications',
           tabBarIcon: ({ color, size }) => (
             <Icon name="notifications" type="material" color={color} size={size} />
           ),
