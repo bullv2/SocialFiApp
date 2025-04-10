@@ -7,7 +7,7 @@ export type MainTabParamList = {
   Home: undefined;
   Profile: undefined;
   Wallet: undefined;
-  Notifications: undefined;
+  Pictures: undefined;
 };
 
 export type AuthStackParamList = {

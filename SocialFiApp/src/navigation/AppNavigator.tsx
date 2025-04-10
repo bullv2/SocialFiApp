@@ -8,7 +8,7 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import HomeScreen from '../screens/main/HomeScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import WalletScreen from '../screens/main/WalletScreen';
-import NotificationsScreen from '../screens/main/NotificationsScreen';
+import { PictureScreen } from '../screens/main/PictureScreen';
 import { theme } from '../theme/theme';
 import { Icon } from '@rneui/themed';
 import { TextStyle } from 'react-native';
@@ -64,6 +64,17 @@ const MainTabs = () => {
         }}
       />
       <Tab.Screen
+        name="Pictures"
+        component={PictureScreen}
+        options={{
+          title: 'Picture Chains',
+          headerTitle: 'Picture Chains',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="image" type="material" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -83,16 +94,6 @@ const MainTabs = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Notifications"
-        component={NotificationsScreen}
-        options={{
-          title: 'Notifications',
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="notifications" type="material" color={color} size={size} />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };
@@ -107,11 +108,30 @@ const AuthNavigator = () => {
         },
         headerTintColor: theme.colors.text.primary,
         headerTitleStyle,
+        headerShadowVisible: false,
       }}
     >
-      <AuthStack.Screen name="Login" component={LoginScreen} />
-      <AuthStack.Screen name="Register" component={RegisterScreen} />
-      <AuthStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <AuthStack.Screen 
+        name="Login" 
+        component={LoginScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      <AuthStack.Screen 
+        name="Register" 
+        component={RegisterScreen}
+        options={{
+          title: 'Create Account'
+        }}
+      />
+      <AuthStack.Screen 
+        name="ForgotPassword" 
+        component={ForgotPasswordScreen}
+        options={{
+          title: 'Reset Password'
+        }}
+      />
     </AuthStack.Navigator>
   );
 };

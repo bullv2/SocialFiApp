@@ -1,13 +1,73 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TextInput, TouchableOpacity, ImageStyle, TextStyle, ViewStyle } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TextInput, TouchableOpacity, ImageStyle, TextStyle, ViewStyle, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../../theme/theme';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../../theme/ThemeContext';
+import { Icon } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+
+interface Notification {
+  id: string;
+  type: 'like' | 'comment' | 'follow' | 'mention';
+  message: string;
+  time: string;
+  read: boolean;
+}
+
+const demoNotifications: Notification[] = [
+  {
+    id: '1',
+    type: 'like',
+    message: 'alice.eth liked your post',
+    time: '2m ago',
+    read: false,
+  },
+  {
+    id: '2',
+    type: 'comment',
+    message: 'bob.eth commented on your post',
+    time: '5m ago',
+    read: false,
+  },
+  {
+    id: '3',
+    type: 'follow',
+    message: 'charlie.eth started following you',
+    time: '10m ago',
+    read: true,
+  },
+];
 
 const HomeScreen = () => {
+  const theme = useTheme();
+  const navigation = useNavigation();
   const [newPost, setNewPost] = useState('');
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState(demoNotifications);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => setShowNotifications(true)}
+          style={styles.notificationButton}
+        >
+          <Icon
+            name="notifications"
+            type="material"
+            color={theme.colors.text.primary}
+            size={24}
+          />
+          {notifications.some(n => !n.read) && (
+            <View style={[styles.badge, { backgroundColor: theme.colors.primary }]} />
+          )}
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, notifications]);
 
   const demoPosts = [
     {
@@ -57,9 +117,32 @@ const HomeScreen = () => {
     console.log('Share post:', postId);
   };
 
+  const markAsRead = (id: string) => {
+    setNotifications(prev =>
+      prev.map(n => (n.id === id ? { ...n, read: true } : n))
+    );
+  };
+
+  const renderNotificationIcon = (type: Notification['type']) => {
+    const icons = {
+      like: 'favorite',
+      comment: 'chat',
+      follow: 'person-add',
+      mention: 'alternate-email',
+    };
+    return (
+      <Icon
+        name={icons[type]}
+        type="material"
+        color={theme.colors.primary}
+        size={24}
+      />
+    );
+  };
+
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
-      <ScrollView style={styles.scrollView}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Card variant="filled" style={styles.createPostCard}>
           <View style={styles.createPostHeader}>
             <Image
@@ -132,6 +215,79 @@ const HomeScreen = () => {
           ))}
         </ScrollView>
       </ScrollView>
+
+      <Modal
+        visible={showNotifications}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowNotifications(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setShowNotifications(false)}
+        >
+          <View
+            style={[
+              styles.notificationsContainer,
+              { backgroundColor: theme.colors.surface },
+            ]}
+          >
+            <View style={styles.notificationsHeader}>
+              <Text
+                style={[styles.notificationsTitle, { color: theme.colors.text.primary }]}
+              >
+                Notifications
+              </Text>
+              <TouchableOpacity onPress={() => setShowNotifications(false)}>
+                <Icon
+                  name="close"
+                  type="material"
+                  color={theme.colors.text.primary}
+                  size={24}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.notificationsList}>
+              {notifications.map(notification => (
+                <TouchableOpacity
+                  key={notification.id}
+                  style={[
+                    styles.notificationItem,
+                    !notification.read && {
+                      backgroundColor: `${theme.colors.primary}10`,
+                    },
+                  ]}
+                  onPress={() => markAsRead(notification.id)}
+                >
+                  <View style={styles.notificationIcon}>
+                    {renderNotificationIcon(notification.type)}
+                  </View>
+                  <View style={styles.notificationContent}>
+                    <Text
+                      style={[
+                        styles.notificationMessage,
+                        { color: theme.colors.text.primary },
+                      ]}
+                    >
+                      {notification.message}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.notificationTime,
+                        { color: theme.colors.text.secondary },
+                      ]}
+                    >
+                      {notification.time}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -139,10 +295,9 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
   },
-  scrollView: {
-    flex: 1,
+  scrollContent: {
+    padding: 16,
   },
   createPostCard: {
     marginTop: theme.spacing.md,
@@ -234,6 +389,64 @@ const styles = StyleSheet.create({
   },
   likedText: {
     color: theme.colors.error,
+  },
+  notificationButton: {
+    padding: 8,
+    marginRight: 8,
+  },
+  badge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-start',
+  },
+  notificationsContainer: {
+    marginTop: 60,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    maxHeight: '80%',
+  },
+  notificationsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  notificationsTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  notificationsList: {
+    padding: 16,
+  },
+  notificationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 8,
+  },
+  notificationIcon: {
+    marginRight: 12,
+  },
+  notificationContent: {
+    flex: 1,
+  },
+  notificationMessage: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  notificationTime: {
+    fontSize: 12,
   },
 });
 
